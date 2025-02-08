@@ -5,9 +5,30 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
-public record TaxScheme(@Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id,
-                        @OneToMany Set<TaxCategory> taxCategories) {
-    private TaxScheme() {
-        this(null, null);
+public class TaxScheme {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToMany
+    private Set<TaxCategory> taxCategories;
+
+    public TaxScheme() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Set<TaxCategory> getTaxCategories() {
+        return taxCategories;
+    }
+
+    public void setTaxCategories(Set<TaxCategory> taxCategories) {
+        this.taxCategories = taxCategories;
     }
 }
