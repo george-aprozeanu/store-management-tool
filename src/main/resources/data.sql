@@ -27,6 +27,7 @@ VALUES ('RO', 'ELECT.RO'),
        ('BG', 'ELECT.BG');
 
 INSERT INTO STORE_SECTION (STORE_NAME, DESCRIPTION, NAME)
-VALUES ('ELECT.RO', 'Descriere atractivă a categoriei telefoane mobile', 'Telefoane Mobile'),
-       ('ELECT.BG', 'Привлекателно описание на категорията мобилни телефони', 'Мобилни телефони'),
-       ('FRESH.RO', 'Descriere generică a categoriei legume proaspete', 'Legume Proaspete');
+VALUES ('ELECT.RO', 'Descriere atractivă a categoriei electronice', 'Electronice'),
+       ('ELECT.BG', 'Атрактивно описание на категория електроника', 'Електронен'),
+       ('FRESH.RO', 'Descriere generică a secțiunii aprozar', 'Aprozar');
+
