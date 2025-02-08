@@ -2,29 +2,29 @@ package com.aprozeanu.smt.model.store;
 
 import com.aprozeanu.smt.model.price.Currency;
 import com.aprozeanu.smt.model.price.TaxScheme;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Market {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
+    @Id
+    private String name;
     @OneToOne
     private Currency currency;
-
     @OneToOne
     private TaxScheme taxScheme;
 
     public Market() {
     }
 
-    public Long getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Currency getCurrency() {

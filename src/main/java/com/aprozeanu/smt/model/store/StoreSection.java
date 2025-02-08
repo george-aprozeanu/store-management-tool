@@ -19,7 +19,18 @@ public class StoreSection {
     @OneToMany(mappedBy = "section")
     private Set<StoreSectionEntry> storeSectionEntrySet;
 
+    @ManyToOne
+    private Store store;
+
     public StoreSection() {
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
     }
 
     public Long getId() {

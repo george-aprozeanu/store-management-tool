@@ -1,27 +1,29 @@
 package com.aprozeanu.smt.model.price;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 
 import java.util.Set;
 
 @Entity
 public class TaxScheme {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @OneToMany
+    @Id
+    private String name;
+
+    @ManyToMany
     private Set<TaxCategory> taxCategories;
 
     public TaxScheme() {
     }
 
-    public Long getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Set<TaxCategory> getTaxCategories() {
@@ -31,4 +33,5 @@ public class TaxScheme {
     public void setTaxCategories(Set<TaxCategory> taxCategories) {
         this.taxCategories = taxCategories;
     }
+
 }
