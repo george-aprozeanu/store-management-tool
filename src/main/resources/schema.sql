@@ -1,0 +1,1 @@
+create table product (id bigint auto_increment, description varchar(255), name varchar(255), primary key (id))
