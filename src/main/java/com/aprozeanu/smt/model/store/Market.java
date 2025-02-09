@@ -13,6 +13,7 @@ public class Market {
     private String name;
     @OneToOne
     private Currency currency;
+
     @OneToOne
     private TaxScheme taxScheme;
 

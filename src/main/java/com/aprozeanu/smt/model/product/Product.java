@@ -19,8 +19,21 @@ public class Product {
     @ManyToMany
     private Set<ProductCategory> categories;
 
+//    @JsonIgnore
+//    @Column
+//    @Convert(converter = StringToListConverter.class)
+//    private List<String> keywords;
+
     public Product() {
     }
+
+//    public List<String> getKeywords() {
+//        return keywords;
+//    }
+//
+//    public void setKeywords(List<String> keywords) {
+//        this.keywords = keywords;
+//    }
 
     public Long getId() {
         return id;

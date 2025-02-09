@@ -6,12 +6,12 @@ INSERT INTO TAX_SCHEME (NAME)
 VALUES ('BG_VAT'),
        ('RO_VAT');
 
-INSERT INTO PUBLIC.TAX_CATEGORY (PERCENT, NAME)
+INSERT INTO TAX_CATEGORY (PERCENT, NAME)
 VALUES (9, 'VAT_9'),
        (19, 'VAT_19'),
        (20, 'VAT_20');
 
-INSERT INTO PUBLIC.TAX_SCHEME_TAX_CATEGORIES (TAX_CATEGORIES_NAME, TAX_SCHEME_NAME)
+INSERT INTO TAX_SCHEME_TAX_CATEGORIES (TAX_CATEGORIES_NAME, TAX_SCHEME_NAME)
 VALUES ('VAT_19', 'RO_VAT'),
        ('VAT_20', 'BG_VAT'),
        ('VAT_9', 'BG_VAT'),
@@ -31,3 +31,22 @@ VALUES ('ELECT.RO', 'Descriere atractivă a categoriei electronice', 'Electronic
        ('ELECT.BG', 'Атрактивно описание на категория електроника', 'Електронен'),
        ('FRESH.RO', 'Descriere generică a secțiunii aprozar', 'Aprozar');
 
+INSERT INTO PRODUCT_CATEGORY (DESCRIPTION, NAME)
+VALUES ('Descriere comercială pentru telefoane mobile', 'Telefoane Mobile'),
+       ('Fructe proaspete', 'Fructe');
+
+INSERT INTO PRODUCT (DESCRIPTION, NAME)
+values ('Samsung S24 Mobile Phone', 'Samsung S24'),
+       ('Mere Granny Smith', 'Mere Verzi');
+
+INSERT INTO STORE_SECTION_ENTRY (PRICE, PRODUCT_ID, SECTION_ID, TAX_CATEGORY_NAME)
+VALUES (389999, (SELECT ID FROM PRODUCT WHERE NAME = 'Samsung S24'),
+        (SELECT ID FROM STORE_SECTION WHERE NAME = 'Electronice'), 'VAT_19');
+
+INSERT INTO STORE_SECTION_ENTRY (PRICE, PRODUCT_ID, SECTION_ID, TAX_CATEGORY_NAME)
+VALUES (152758, (SELECT ID FROM PRODUCT WHERE NAME = 'Samsung S24'),
+        (SELECT ID FROM STORE_SECTION WHERE NAME = 'Електронен'), 'VAT_20');
+
+INSERT INTO STORE_SECTION_ENTRY (PRICE, PRODUCT_ID, SECTION_ID, TAX_CATEGORY_NAME)
+VALUES (1299, (SELECT ID FROM PRODUCT WHERE NAME = 'Mere Verzi'),
+        (SELECT ID FROM STORE_SECTION WHERE NAME = 'Aprozar'), 'VAT_9');
