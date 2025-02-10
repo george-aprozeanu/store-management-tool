@@ -1,6 +1,7 @@
 /target
 /.idea
 /.vscode
+/lucene-index
 *.iml
 *.mv.db
 *.trace.db

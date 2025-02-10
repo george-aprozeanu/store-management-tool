@@ -1,6 +1,5 @@
 package com.aprozeanu.smt.service.browse.dto;
 
-
 import com.aprozeanu.smt.model.price.Pricing;
 import com.aprozeanu.smt.model.store.StoreSection;
 import com.aprozeanu.smt.model.store.StoreSectionEntry;
@@ -14,18 +13,18 @@ import java.util.List;
 public class Builder {
 
     public static AllMarketsResponse allMarketsResponse(List<com.aprozeanu.smt.model.store.Market> dbMarkets) {
-        List<Market> markets = dbMarkets.stream().map(Builder::market).toList();
+        var markets = dbMarkets.stream().map(Builder::market).toList();
         return new AllMarketsResponse(markets);
     }
 
     static Market market(com.aprozeanu.smt.model.store.Market dbMarket) {
-        String name = dbMarket.getName();
-        String symbol = dbMarket.getCurrency().getSymbol();
+        var name = dbMarket.getName();
+        var symbol = dbMarket.getCurrency().getSymbol();
         return new Market(name, symbol);
     }
 
     public static AllStoresResponse allStoresResponse(List<com.aprozeanu.smt.model.store.Store> dbStores) {
-        List<Store> stores = dbStores.stream().map(Builder::store).toList();
+        var stores = dbStores.stream().map(Builder::store).toList();
         return new AllStoresResponse(stores);
     }
 
@@ -39,14 +38,14 @@ public class Builder {
 
     public static StoresByMarketResponse storesByMarketResponse(String marketName,
                                                                 List<com.aprozeanu.smt.model.store.Store> dbStores) {
-        List<Store> stores = dbStores.stream().map(Builder::store).toList();
+        var stores = dbStores.stream().map(Builder::store).toList();
         return new StoresByMarketResponse(marketName, stores);
     }
 
     public static AllStoreSectionsResponse allStoreSectionsResponse(List<StoreSection> dbStoreSections) {
-        List<AllStoreSectionsResponse.StoreSection> storeSections = dbStoreSections.stream().map(dbStoreSection -> {
-            Long id = dbStoreSection.getId();
-            String name = dbStoreSection.getName();
+        var storeSections = dbStoreSections.stream().map(dbStoreSection -> {
+            var id = dbStoreSection.getId();
+            var name = dbStoreSection.getName();
             return new AllStoreSectionsResponse.StoreSection(id, name);
         }).toList();
         return new AllStoreSectionsResponse(storeSections);
@@ -57,12 +56,12 @@ public class Builder {
     }
 
     private static StoreSectionEntriesResponse.StoreSectionEntry storeSectionEntry(StoreSectionEntry storeSectionEntry) {
-        Long id = storeSectionEntry.getId();
-        Long productId = storeSectionEntry.getProduct().getId();
-        String name = storeSectionEntry.getProduct().getName();
-        String priceBeforeTax = Builder.formatPriceForEntry(Pricing.getEntryPrice(storeSectionEntry),
+        var id = storeSectionEntry.getId();
+        var productId = storeSectionEntry.getProduct().getId();
+        var name = storeSectionEntry.getProduct().getName();
+        var priceBeforeTax = Builder.formatPriceForEntry(Pricing.getEntryPrice(storeSectionEntry),
             storeSectionEntry);
-        String priceAfterTax = Builder.formatPriceForEntry(Pricing.getEntryPriceWithTax(storeSectionEntry),
+        var priceAfterTax = Builder.formatPriceForEntry(Pricing.getEntryPriceWithTax(storeSectionEntry),
             storeSectionEntry);
         return new StoreSectionEntriesResponse.StoreSectionEntry(id, productId, name, priceBeforeTax, priceAfterTax);
     }
@@ -76,8 +75,7 @@ public class Builder {
     }
 
     private static String formatPriceForEntry(BigDecimal value, StoreSectionEntry storeSectionEntry) {
-        com.aprozeanu.smt.model.price.Currency currency =
-            storeSectionEntry.getSection().getStore().getMarket().getCurrency();
+        var currency = storeSectionEntry.getSection().getStore().getMarket().getCurrency();
         return getNumberFormat(currency).format(value);
     }
 
@@ -86,9 +84,9 @@ public class Builder {
     }
 
     public static StoreSectionResponse storeSectionResponse(StoreSection storeSection) {
-        Long id = storeSection.getId();
-        String name = storeSection.getName();
-        String description = storeSection.getDescription();
+        var id = storeSection.getId();
+        var name = storeSection.getName();
+        var description = storeSection.getDescription();
         return new StoreSectionResponse(new StoreSectionResponse.StoreSection(id, name, description));
     }
 }

@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/browse")
 public class BrowseController {
 
-    @Autowired
+    final
     BrowseStoreService browseStoreService;
+
+    public BrowseController(BrowseStoreService browseStoreService) {
+        this.browseStoreService = browseStoreService;
+    }
 
     @GetMapping("/markets")
     public AllMarketsResponse getAllMarkets() {
