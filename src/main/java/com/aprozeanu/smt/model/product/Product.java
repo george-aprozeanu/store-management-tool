@@ -1,39 +1,47 @@
 package com.aprozeanu.smt.model.product;
 
+import com.aprozeanu.smt.model.StringToListConverter;
 import jakarta.persistence.*;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
+@Indexed
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
+    @FullTextField
     private String name;
 
     @Column
+    @FullTextField
     private String description;
 
     @ManyToMany
     private Set<ProductCategory> categories;
 
-//    @JsonIgnore
-//    @Column
-//    @Convert(converter = StringToListConverter.class)
-//    private List<String> keywords;
+    @Column
+    @Convert(converter = StringToListConverter.class)
+    @KeywordField
+    private List<String> keywords;
 
     public Product() {
     }
 
-//    public List<String> getKeywords() {
-//        return keywords;
-//    }
-//
-//    public void setKeywords(List<String> keywords) {
-//        this.keywords = keywords;
-//    }
+    public List<String> getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(List<String> keywords) {
+        this.keywords = keywords;
+    }
 
     public Long getId() {
         return id;
