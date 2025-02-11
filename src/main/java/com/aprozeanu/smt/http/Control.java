@@ -1,4 +1,4 @@
-package com.aprozeanu.smt.controller;
+package com.aprozeanu.smt.http;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
