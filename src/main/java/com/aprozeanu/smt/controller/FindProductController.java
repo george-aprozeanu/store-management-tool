@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/find")
 public class FindProductController {
 
-    final FindProductService findProductService;
+    final FindProductService service;
 
-    public FindProductController(FindProductService findProductService) {
-        this.findProductService = findProductService;
+    public FindProductController(FindProductService service) {
+        this.service = service;
     }
 
     @GetMapping("/products")
     public SearchProductsResponse getProductsByName(@RequestParam("search") String search,
                                                     @RequestParam(value = "limit", defaultValue = "20") int limit) {
-        return findProductService.searchProducts(search, limit);
+        return service.searchProducts(search, limit);
     }
 }

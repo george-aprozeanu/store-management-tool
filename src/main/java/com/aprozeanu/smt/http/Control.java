@@ -1,12 +1,11 @@
 package com.aprozeanu.smt.http;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
 public class Control {
-    public static <T> T foundOptional(Optional<T> optional) {
-        return optional.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found"));
+    public static <T> ResponseEntity<T> foundOptional(Optional<T> optional) {
+        return optional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
