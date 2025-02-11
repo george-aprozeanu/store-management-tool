@@ -1,33 +1,18 @@
 package com.aprozeanu.smt.service.browse;
 
-import static com.aprozeanu.smt.service.browse.dto.Builder.allMarketsResponse;
-import static com.aprozeanu.smt.service.browse.dto.Builder.allStoreSectionsResponse;
-import static com.aprozeanu.smt.service.browse.dto.Builder.allStoresResponse;
-import static com.aprozeanu.smt.service.browse.dto.Builder.marketResponse;
-import static com.aprozeanu.smt.service.browse.dto.Builder.storeResponse;
-import static com.aprozeanu.smt.service.browse.dto.Builder.storeSectionEntriesResponse;
-import static com.aprozeanu.smt.service.browse.dto.Builder.storeSectionResponse;
-import static com.aprozeanu.smt.service.browse.dto.Builder.storesByMarketResponse;
-
+import com.aprozeanu.smt.repository.*;
+import com.aprozeanu.smt.service.browse.dto.*;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-import com.aprozeanu.smt.repository.MarketRepository;
-import com.aprozeanu.smt.repository.StoreRepository;
-import com.aprozeanu.smt.repository.StoreSectionEntryRepository;
-import com.aprozeanu.smt.repository.StoreSectionRepository;
-import com.aprozeanu.smt.service.browse.dto.AllMarketsResponse;
-import com.aprozeanu.smt.service.browse.dto.AllStoreSectionsResponse;
-import com.aprozeanu.smt.service.browse.dto.AllStoresResponse;
-import com.aprozeanu.smt.service.browse.dto.MarketResponse;
-import com.aprozeanu.smt.service.browse.dto.StoreResponse;
-import com.aprozeanu.smt.service.browse.dto.StoreSectionEntriesResponse;
-import com.aprozeanu.smt.service.browse.dto.StoreSectionResponse;
-import com.aprozeanu.smt.service.browse.dto.StoresByMarketResponse;
+import static com.aprozeanu.smt.service.browse.dto.Builder.*;
 
 @Service
 public class BrowseStoreService {
 
+    final ProductRepository productRepository;
 
     final
     StoreSectionRepository storeSectionRepository;
@@ -41,11 +26,20 @@ public class BrowseStoreService {
     final
     StoreSectionEntryRepository storeSectionEntryRepository;
 
-    public BrowseStoreService(StoreSectionRepository storeSectionRepository, StoreRepository storeRepository, MarketRepository marketRepository, StoreSectionEntryRepository storeSectionEntryRepository) {
+    final
+    StoreSectionCustomRepository storeSectionCustomRepository;
+
+    public BrowseStoreService(ProductRepository productRepository, StoreSectionRepository storeSectionRepository,
+                              StoreRepository storeRepository,
+                              MarketRepository marketRepository,
+                              StoreSectionEntryRepository storeSectionEntryRepository,
+                              StoreSectionCustomRepository storeSectionCustomRepository) {
+        this.productRepository = productRepository;
         this.storeSectionRepository = storeSectionRepository;
         this.storeRepository = storeRepository;
         this.marketRepository = marketRepository;
         this.storeSectionEntryRepository = storeSectionEntryRepository;
+        this.storeSectionCustomRepository = storeSectionCustomRepository;
     }
 
     public StoresByMarketResponse getAllStoresByMarket(String market) {
@@ -78,5 +72,16 @@ public class BrowseStoreService {
 
     public MarketResponse getMarket(String name) {
         return marketResponse(marketRepository.getFirstByName(name));
+    }
+
+    public ProductResponse getProduct(Long productId) {
+        var maybeProduct = this.productRepository.getFirstById(productId);
+        if (maybeProduct.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Store sections not found for product with ID: " + productId);
+        }
+        var product = maybeProduct.get(0);
+        var storeSections = this.storeSectionCustomRepository.getStoreSectionsByProduct(product);
+        return productResponse(product, storeSections);
     }
 }

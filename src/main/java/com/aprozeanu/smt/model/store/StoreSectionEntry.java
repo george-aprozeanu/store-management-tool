@@ -11,7 +11,7 @@ public class StoreSectionEntry {
     private Long id;
 
     @ManyToOne
-    private StoreSection section;
+    private StoreSection storeSection;
 
     @ManyToOne
     private Product product;
@@ -32,12 +32,12 @@ public class StoreSectionEntry {
         this.id = id;
     }
 
-    public StoreSection getSection() {
-        return section;
+    public StoreSection getStoreSection() {
+        return storeSection;
     }
 
-    public void setSection(StoreSection section) {
-        this.section = section;
+    public void setStoreSection(StoreSection section) {
+        this.storeSection = section;
     }
 
     public Product getProduct() {

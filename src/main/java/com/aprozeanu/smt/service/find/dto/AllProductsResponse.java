@@ -1,6 +1,5 @@
 package com.aprozeanu.smt.service.find.dto;
 
-import java.util.List;
-
-public record AllProductsResponse(List<Product> product, org.springframework.data.domain.Pageable pageable) {
+public record AllProductsResponse(org.springframework.data.domain.Page<Product> product,
+                                  org.springframework.data.domain.Pageable pageable) {
 }

@@ -6,11 +6,11 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 
 public class Pricing {
-    private final static BigDecimal _100 = BigDecimal.valueOf(100);
     final static MathContext mathContext = MathContext.DECIMAL32;
+    private final static BigDecimal _100 = BigDecimal.valueOf(100);
 
     public static BigDecimal getEntryPrice(StoreSectionEntry storeSectionEntry) {
-        var currency = storeSectionEntry.getSection().getStore().getMarket().getCurrency();
+        var currency = storeSectionEntry.getStoreSection().getStore().getMarket().getCurrency();
         var multiplier = BigDecimal.valueOf(currency.getMultiplier());
         return BigDecimal.valueOf(storeSectionEntry.getPrice()).divide(multiplier, mathContext);
     }

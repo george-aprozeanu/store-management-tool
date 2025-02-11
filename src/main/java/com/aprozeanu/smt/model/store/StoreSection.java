@@ -2,6 +2,8 @@ package com.aprozeanu.smt.model.store;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class StoreSection {
     @Id
@@ -16,6 +18,9 @@ public class StoreSection {
 
     @ManyToOne
     private Store store;
+
+    @OneToMany(mappedBy = "storeSection")
+    private List<StoreSectionEntry> sectionEntries;
 
     public StoreSection() {
     }
@@ -50,5 +55,13 @@ public class StoreSection {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<StoreSectionEntry> getSectionEntries() {
+        return sectionEntries;
+    }
+
+    public void setSectionEntries(List<StoreSectionEntry> sectionEntries) {
+        this.sectionEntries = sectionEntries;
     }
 }

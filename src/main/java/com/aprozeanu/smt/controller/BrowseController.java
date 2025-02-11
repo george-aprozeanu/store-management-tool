@@ -2,7 +2,6 @@ package com.aprozeanu.smt.controller;
 
 import com.aprozeanu.smt.service.browse.BrowseStoreService;
 import com.aprozeanu.smt.service.browse.dto.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,5 +59,10 @@ public class BrowseController {
     public StoreSectionEntriesResponse getStoreSectionEntries(@PathVariable("sectionId") Long sectionId,
                                                               @NonNull Pageable pageable) {
         return browseStoreService.getStoreSectionEntries(sectionId, pageable);
+    }
+
+    @GetMapping("/products/{productId}")
+    public ProductResponse getProduct(@PathVariable("productId") Long productId) {
+        return browseStoreService.getProduct(productId);
     }
 }

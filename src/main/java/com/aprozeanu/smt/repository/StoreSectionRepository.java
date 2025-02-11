@@ -11,5 +11,4 @@ public interface StoreSectionRepository extends JpaRepository<StoreSection, Long
     List<StoreSection> getAllByStoreName(String store);
 
     StoreSection getFirstById(Long sectionId);
-
 }

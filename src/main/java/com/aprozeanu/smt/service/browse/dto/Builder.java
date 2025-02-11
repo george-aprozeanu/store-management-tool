@@ -1,6 +1,7 @@
 package com.aprozeanu.smt.service.browse.dto;
 
 import com.aprozeanu.smt.model.price.Pricing;
+import com.aprozeanu.smt.model.product.Product;
 import com.aprozeanu.smt.model.store.StoreSection;
 import com.aprozeanu.smt.model.store.StoreSectionEntry;
 import org.springframework.data.domain.Page;
@@ -75,7 +76,7 @@ public class Builder {
     }
 
     private static String formatPriceForEntry(BigDecimal value, StoreSectionEntry storeSectionEntry) {
-        var currency = storeSectionEntry.getSection().getStore().getMarket().getCurrency();
+        var currency = storeSectionEntry.getStoreSection().getStore().getMarket().getCurrency();
         return getNumberFormat(currency).format(value);
     }
 
@@ -88,5 +89,18 @@ public class Builder {
         var name = storeSection.getName();
         var description = storeSection.getDescription();
         return new StoreSectionResponse(new StoreSectionResponse.StoreSection(id, name, description));
+    }
+
+    public static ProductResponse productResponse(Product dbProduct, List<StoreSection> dbStoreSections) {
+        var storeSections = dbStoreSections.stream().map(Builder::storeSectionForProduct).toList();
+        var product = new ProductResponse.Product(dbProduct.getId(), dbProduct.getName(),
+            dbProduct.getDescription());
+        return new ProductResponse(product, storeSections);
+    }
+
+    private static ProductResponse.StoreSection storeSectionForProduct(StoreSection dbStoreSection) {
+        var id = dbStoreSection.getId();
+        var name = dbStoreSection.getName();
+        return new ProductResponse.StoreSection(id, name);
     }
 }

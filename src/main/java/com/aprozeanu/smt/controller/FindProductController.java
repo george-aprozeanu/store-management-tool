@@ -1,10 +1,10 @@
 package com.aprozeanu.smt.controller;
 
 import com.aprozeanu.smt.service.find.FindProductService;
-import com.aprozeanu.smt.service.find.dto.AllProductsResponse;
-import org.springframework.data.domain.Pageable;
+import com.aprozeanu.smt.service.find.dto.SearchProductsResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,7 +18,8 @@ public class FindProductController {
     }
 
     @GetMapping("/products")
-    public AllProductsResponse getProducts(Pageable pageable) {
-        return findProductService.getAllProducts(pageable);
+    public SearchProductsResponse getProductsByName(@RequestParam("search") String search,
+                                                    @RequestParam(value = "limit", defaultValue = "20") int limit) {
+        return findProductService.searchProducts(search, limit);
     }
 }

@@ -2,6 +2,7 @@ package com.aprozeanu.smt.model.product;
 
 import com.aprozeanu.smt.model.StringToListConverter;
 import jakarta.persistence.*;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
@@ -13,6 +14,7 @@ import java.util.Set;
 @Indexed
 public class Product {
     @Id
+    @DocumentId
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

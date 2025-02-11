@@ -1,15 +1,14 @@
 package com.aprozeanu.smt.service.find;
 
-import com.aprozeanu.smt.model.product.Product;
 import com.aprozeanu.smt.repository.ProductRepository;
 import com.aprozeanu.smt.repository.ProductSearchRepository;
-import com.aprozeanu.smt.service.find.dto.AllProductsResponse;
+import com.aprozeanu.smt.service.find.dto.GetProductsByNameResponse;
+import com.aprozeanu.smt.service.find.dto.SearchProductsResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import static com.aprozeanu.smt.service.find.dto.Builder.allProductsResponse;
-
-import java.util.List;
+import static com.aprozeanu.smt.service.find.dto.Builder.productsByNameResponse;
+import static com.aprozeanu.smt.service.find.dto.Builder.searchProductsResponse;
 
 @Service
 public class FindProductService {
@@ -22,12 +21,13 @@ public class FindProductService {
         this.productRepository = productRepository;
     }
 
-    public AllProductsResponse getAllProducts(Pageable pageable) {
-        var products = this.productRepository.findAll();
-        return allProductsResponse(products, pageable);
+    public GetProductsByNameResponse getAllProductsByName(String name, Pageable pageable) {
+        var products = this.productRepository.findAllByNameContaining(name, pageable);
+        return productsByNameResponse(products);
     }
 
-    private Object products(List<Product> products) {
-        return null;
+    public SearchProductsResponse searchProducts(String search, int limit) {
+        var products = this.productSearchRepository.search(search, limit);
+        return searchProductsResponse(products);
     }
 }
