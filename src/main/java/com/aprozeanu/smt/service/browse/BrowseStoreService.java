@@ -1,11 +1,14 @@
 package com.aprozeanu.smt.service.browse;
 
+import com.aprozeanu.smt.model.store.StoreSection;
+import com.aprozeanu.smt.model.store.StoreSectionEntry;
 import com.aprozeanu.smt.repository.*;
 import com.aprozeanu.smt.service.browse.dto.*;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 import static com.aprozeanu.smt.service.browse.dto.Builder.*;
 
@@ -14,24 +17,18 @@ public class BrowseStoreService {
 
     final ProductRepository productRepository;
 
-    final
-    StoreSectionRepository storeSectionRepository;
+    final StoreSectionRepository storeSectionRepository;
 
-    final
-    StoreRepository storeRepository;
+    final StoreRepository storeRepository;
 
-    final
-    MarketRepository marketRepository;
+    final MarketRepository marketRepository;
 
-    final
-    StoreSectionEntryRepository storeSectionEntryRepository;
+    final StoreSectionEntryRepository storeSectionEntryRepository;
 
-    final
-    StoreSectionCustomRepository storeSectionCustomRepository;
+    final StoreSectionCustomRepository storeSectionCustomRepository;
 
     public BrowseStoreService(ProductRepository productRepository, StoreSectionRepository storeSectionRepository,
-                              StoreRepository storeRepository,
-                              MarketRepository marketRepository,
+                              StoreRepository storeRepository, MarketRepository marketRepository,
                               StoreSectionEntryRepository storeSectionEntryRepository,
                               StoreSectionCustomRepository storeSectionCustomRepository) {
         this.productRepository = productRepository;
@@ -62,26 +59,30 @@ public class BrowseStoreService {
         return storeResponse(storeRepository.getFirstByName(store));
     }
 
-    public StoreSectionResponse getStoreSection(Long sectionId) {
-        return storeSectionResponse(storeSectionRepository.getFirstById(sectionId));
+    public Optional<StoreSectionResponse> getStoreSection(Long sectionId) {
+        Optional<StoreSection> maybeStoreSection = storeSectionRepository.getFirstById(sectionId);
+        return maybeStoreSection.map(Builder::storeSectionResponse);
     }
 
-    public StoreSectionEntriesResponse getStoreSectionEntries(Long sectionId, Pageable pageable) {
-        return storeSectionEntriesResponse(storeSectionEntryRepository.findStoreSectionEntryById(sectionId, pageable));
+    public Optional<StoreSectionEntriesResponse> getStoreSectionEntries(Long sectionId, Pageable pageable) {
+        var storeSection = storeSectionRepository.getFirstById(sectionId);
+        return storeSection.map(section -> {
+            Page<StoreSectionEntry> storeSectionEntries = storeSectionEntryRepository.findStoreSectionEntryById(
+                sectionId,
+                pageable);
+            return storeSectionEntriesResponse(storeSectionEntries);
+        });
     }
 
     public MarketResponse getMarket(String name) {
         return marketResponse(marketRepository.getFirstByName(name));
     }
 
-    public ProductResponse getProduct(Long productId) {
+    public Optional<ProductResponse> getProduct(Long productId) {
         var maybeProduct = this.productRepository.getFirstById(productId);
-        if (maybeProduct.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "Store sections not found for product with ID: " + productId);
-        }
-        var product = maybeProduct.get(0);
-        var storeSections = this.storeSectionCustomRepository.getStoreSectionsByProduct(product);
-        return productResponse(product, storeSections);
+        return maybeProduct.map(product -> {
+            var storeSections = this.storeSectionCustomRepository.getStoreSectionsByProduct(product);
+            return productResponse(product, storeSections);
+        });
     }
 }

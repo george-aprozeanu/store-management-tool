@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.aprozeanu.smt.controller.Control.foundOptional;
+
 @RestController
 @RequestMapping("/api/v1/browse")
 public class BrowseController {
 
-    final
-    BrowseStoreService browseStoreService;
+    final BrowseStoreService browseStoreService;
 
     public BrowseController(BrowseStoreService browseStoreService) {
         this.browseStoreService = browseStoreService;
@@ -52,17 +53,17 @@ public class BrowseController {
 
     @GetMapping("/sections/{sectionId}")
     public StoreSectionResponse getStoreSection(@PathVariable("sectionId") Long sectionId) {
-        return browseStoreService.getStoreSection(sectionId);
+        return foundOptional(browseStoreService.getStoreSection(sectionId));
     }
 
     @GetMapping("/sections/{sectionId}/entries")
     public StoreSectionEntriesResponse getStoreSectionEntries(@PathVariable("sectionId") Long sectionId,
                                                               @NonNull Pageable pageable) {
-        return browseStoreService.getStoreSectionEntries(sectionId, pageable);
+        return foundOptional(browseStoreService.getStoreSectionEntries(sectionId, pageable));
     }
 
     @GetMapping("/products/{productId}")
     public ProductResponse getProduct(@PathVariable("productId") Long productId) {
-        return browseStoreService.getProduct(productId);
+        return foundOptional(browseStoreService.getProduct(productId));
     }
 }

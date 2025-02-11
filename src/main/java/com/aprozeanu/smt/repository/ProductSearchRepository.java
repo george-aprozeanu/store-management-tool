@@ -17,7 +17,8 @@ public class ProductSearchRepository extends SimpleJpaRepository<Product, Long> 
     private final EntityManager em;
 
     public ProductSearchRepository(EntityManager em) {
-        super(Product.class, em);
+        super(Product.class,
+            em);
         this.em = em;
     }
 
@@ -36,7 +37,9 @@ public class ProductSearchRepository extends SimpleJpaRepository<Product, Long> 
     }
 
     public List<Product> search(String text, int limit) {
-        return getSearchResult(text, new String[]{"name", "description"}, limit);
+        return getSearchResult(text,
+            new String[]{"name", "description"},
+            limit);
     }
 
 }
