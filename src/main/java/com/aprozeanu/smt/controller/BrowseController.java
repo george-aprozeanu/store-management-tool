@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.aprozeanu.smt.http.Control.foundOptional;
+import static com.aprozeanu.smt.http.Response.foundOptional;
 
 @RestController
-@RequestMapping("/api/v1/browse")
+@RequestMapping("/browse")
 public class BrowseController {
 
     final BrowseStoreService service;
