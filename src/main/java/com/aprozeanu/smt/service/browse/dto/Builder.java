@@ -92,15 +92,14 @@ public class Builder {
     }
 
     public static ProductResponse productResponse(Product dbProduct, List<StoreSection> dbStoreSections) {
-        var storeSections = dbStoreSections.stream().map(Builder::storeSectionForProduct).toList();
+        var storeSections = dbStoreSections.stream().map(dbStoreSection -> {
+            var id = dbStoreSection.getId();
+            var name = dbStoreSection.getName();
+            return new ProductResponse.StoreSection(id, name);
+        }).toList();
         var product = new ProductResponse.Product(dbProduct.getId(), dbProduct.getName(),
             dbProduct.getDescription());
         return new ProductResponse(product, storeSections);
     }
 
-    private static ProductResponse.StoreSection storeSectionForProduct(StoreSection dbStoreSection) {
-        var id = dbStoreSection.getId();
-        var name = dbStoreSection.getName();
-        return new ProductResponse.StoreSection(id, name);
-    }
 }

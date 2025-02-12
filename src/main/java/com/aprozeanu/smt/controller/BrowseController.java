@@ -28,8 +28,8 @@ public class BrowseController {
     }
 
     @GetMapping("/markets/{market}")
-    public MarketResponse getMarket(@PathVariable("market") String market) {
-        return service.getMarket(market);
+    public ResponseEntity<MarketResponse> getMarket(@PathVariable("market") String market) {
+        return foundOptional(service.getMarket(market));
     }
 
     @GetMapping("/markets/{market}/stores")
@@ -43,8 +43,8 @@ public class BrowseController {
     }
 
     @GetMapping("/stores/{store}")
-    public StoreResponse getStore(@PathVariable("store") String store) {
-        return service.getStoreByName(store);
+    public ResponseEntity<StoreResponse> getStore(@PathVariable("store") String store) {
+        return foundOptional(service.getStoreByName(store));
     }
 
     @GetMapping("/stores/{store}/sections")
@@ -59,10 +59,9 @@ public class BrowseController {
     }
 
     @GetMapping("/sections/{sectionId}/entries")
-    public ResponseEntity<StoreSectionEntriesResponse> getStoreSectionEntries(@PathVariable("sectionId") Long sectionId,
-                                                                              @NonNull Pageable pageable) {
-        var storeSectionEntries = service.getStoreSectionEntries(sectionId, pageable);
-        return foundOptional(storeSectionEntries);
+    public StoreSectionEntriesResponse getStoreSectionEntries(@PathVariable("sectionId") Long sectionId,
+                                                              @NonNull Pageable pageable) {
+        return service.getStoreSectionEntries(sectionId, pageable);
     }
 
     @GetMapping("/products/{productId}")

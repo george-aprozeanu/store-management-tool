@@ -1,6 +1,6 @@
-package com.aprozeanu.smt.service.find;
+package com.aprozeanu.smt.component;
 
-import com.aprozeanu.smt.repository.ProductSearchRepository;
+import com.aprozeanu.smt.repository.ProductCustomRepositoryImpl;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class SearchIndexer {
 
-    private final ProductSearchRepository productSearchRepository;
+    private final ProductCustomRepositoryImpl productSearchRepository;
 
-    public SearchIndexer(ProductSearchRepository productSearchRepository) {
+    public SearchIndexer(ProductCustomRepositoryImpl productSearchRepository) {
         this.productSearchRepository = productSearchRepository;
     }
 

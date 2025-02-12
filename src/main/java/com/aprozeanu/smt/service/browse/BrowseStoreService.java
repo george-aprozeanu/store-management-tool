@@ -1,5 +1,6 @@
 package com.aprozeanu.smt.service.browse;
 
+import com.aprozeanu.smt.model.store.Market;
 import com.aprozeanu.smt.model.store.StoreSection;
 import com.aprozeanu.smt.model.store.StoreSectionEntry;
 import com.aprozeanu.smt.repository.*;
@@ -55,8 +56,9 @@ public class BrowseStoreService {
         return allStoresResponse(storeRepository.findAll());
     }
 
-    public StoreResponse getStoreByName(String store) {
-        return storeResponse(storeRepository.getFirstByName(store));
+    public Optional<StoreResponse> getStoreByName(String store) {
+        var maybeStore = storeRepository.getFirstByName(store);
+        return maybeStore.map(Builder::storeResponse);
     }
 
     public Optional<StoreSectionResponse> getStoreSection(Long sectionId) {
@@ -64,18 +66,16 @@ public class BrowseStoreService {
         return maybeStoreSection.map(Builder::storeSectionResponse);
     }
 
-    public Optional<StoreSectionEntriesResponse> getStoreSectionEntries(Long sectionId, Pageable pageable) {
-        var storeSection = storeSectionRepository.getFirstById(sectionId);
-        return storeSection.map(section -> {
-            Page<StoreSectionEntry> storeSectionEntries = storeSectionEntryRepository.findStoreSectionEntryById(
-                sectionId,
-                pageable);
-            return storeSectionEntriesResponse(storeSectionEntries);
-        });
+    public StoreSectionEntriesResponse getStoreSectionEntries(Long sectionId, Pageable pageable) {
+        Page<StoreSectionEntry> storeSectionEntries = storeSectionEntryRepository.findStoreSectionEntryById(
+            sectionId,
+            pageable);
+        return storeSectionEntriesResponse(storeSectionEntries);
     }
 
-    public MarketResponse getMarket(String name) {
-        return marketResponse(marketRepository.getFirstByName(name));
+    public Optional<MarketResponse> getMarket(String name) {
+        var maybeMarket = marketRepository.getFirstByName(name);
+        return maybeMarket.map(Builder::marketResponse);
     }
 
     public Optional<ProductResponse> getProduct(Long productId) {
