@@ -34,11 +34,10 @@ public class AuthDataSourceConfiguration {
 
     @Bean(name = "authEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean authEntityManagerFactory(
-        EntityManagerFactoryBuilder builder, @Qualifier("authDataSource") DataSource dataSource, DataSourceInitializer dataSourceInitializer) {
-        // dataSourceInitializer
+        EntityManagerFactoryBuilder builder, @Qualifier("authDataSource") DataSource dataSource) {
         return builder
             .dataSource(dataSource)
-            .packages("com.aprozeanu.smt.auth.model") // Change to your auth package
+            .packages("com.aprozeanu.smt.auth.model")
             .persistenceUnit("auth")
             .build();
     }
@@ -47,18 +46,6 @@ public class AuthDataSourceConfiguration {
     public PlatformTransactionManager authTransactionManager(
         @Qualifier("authEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
-    }
 
-    @Bean
-    public DataSourceInitializer dataSourceInitializer(@Qualifier("authDataSource") DataSource authDataSource) {
-        DataSourceInitializer initializer = new DataSourceInitializer();
-        initializer.setDataSource(authDataSource);
-        initializer.setDatabasePopulator(databasePopulator());
-        return initializer;
-    }
-
-    private DatabasePopulator databasePopulator() {
-        var schemaScript = new ClassPathResource("schema-auth.sql");
-        return new ResourceDatabasePopulator(schemaScript);
     }
 }

@@ -38,7 +38,7 @@ public class DataSourceConfiguration {
         EntityManagerFactoryBuilder builder, @Qualifier("primaryDataSource") DataSource dataSource) {
         return builder
             .dataSource(dataSource)
-            .packages("com.aprozeanu.smt.model") // Change to your primary package
+            .packages("com.aprozeanu.smt.model")
             .persistenceUnit("primary")
             .build();
     }
