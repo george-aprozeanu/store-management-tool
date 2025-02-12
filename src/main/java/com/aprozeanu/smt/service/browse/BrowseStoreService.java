@@ -1,6 +1,5 @@
 package com.aprozeanu.smt.service.browse;
 
-import com.aprozeanu.smt.model.store.StoreSection;
 import com.aprozeanu.smt.model.store.StoreSectionEntry;
 import com.aprozeanu.smt.repository.*;
 import com.aprozeanu.smt.service.browse.dto.*;

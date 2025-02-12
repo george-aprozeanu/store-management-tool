@@ -4,7 +4,7 @@ import com.aprozeanu.smt.repository.ProductCustomRepositoryImpl;
 import com.aprozeanu.smt.service.find.dto.SearchProductsResponse;
 import org.springframework.stereotype.Service;
 
-import static com.aprozeanu.smt.service.find.dto.Builder.searchProductsResponse;
+import static com.aprozeanu.smt.service.find.dto.SearchProductsResponse.from;
 
 @Service
 public class FindProductService {
@@ -17,6 +17,6 @@ public class FindProductService {
 
     public SearchProductsResponse searchProducts(String search, int limit) {
         var products = this.productSearchRepository.search(search, limit);
-        return searchProductsResponse(products);
+        return from(products);
     }
 }
