@@ -23,11 +23,9 @@ public class AuthProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
-        UserService.UserAndRoles userAndRoles =
-            userService.getUser(username).filter($userAndRoles -> passwordEncoder.matches(
-                password,
-                $userAndRoles.user().getPassword())).orElseThrow(() -> new UsernameNotFoundException("username" +
-                "/password"));
+        UserService.UserAndRoles userAndRoles = userService.getUser(username)
+            .filter($userAndRoles -> passwordEncoder.matches(password, $userAndRoles.user().getPassword()))
+            .orElseThrow(() -> new UsernameNotFoundException("username" + "/password"));
         return new AuthenticationImpl(userAndRoles.user());
     }
 
