@@ -20,22 +20,22 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 @EnableJpaRepositories(
     basePackages = "com.aprozeanu.smt.repository",
-    entityManagerFactoryRef = "primaryEntityManagerFactory",
-    transactionManagerRef = "primaryTransactionManager"
+    entityManagerFactoryRef = "entityManagerFactory",
+    transactionManagerRef = "transactionManager"
 )
 public class DataSourceConfiguration {
 
     @Primary
-    @Bean(name = "primaryDataSource")
+    @Bean(name = "dataSource")
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource primaryDataSource() {
         return DataSourceBuilder.create().build();
     }
 
     @Primary
-    @Bean(name = "primaryEntityManagerFactory")
+    @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean primaryEntityManagerFactory(
-        EntityManagerFactoryBuilder builder, @Qualifier("primaryDataSource") DataSource dataSource) {
+        EntityManagerFactoryBuilder builder, @Qualifier("dataSource") DataSource dataSource) {
         return builder
             .dataSource(dataSource)
             .packages("com.aprozeanu.smt.model")
@@ -44,9 +44,9 @@ public class DataSourceConfiguration {
     }
 
     @Primary
-    @Bean(name = "primaryTransactionManager")
+    @Bean(name = "transactionManager")
     public PlatformTransactionManager primaryTransactionManager(
-        @Qualifier("primaryEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+        @Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
 }

@@ -1,33 +1,28 @@
-drop table if exists `auth_role` cascade;
-drop table if exists `auth_user` cascade;
-drop table if exists `auth_user_auth_roles` cascade;
-CREATE TABLE role
+DROP TABLE IF EXISTS AUTH_USER_AUTH_ROLES;
+DROP TABLE IF EXISTS AUTH_ROLE;
+DROP TABLE IF EXISTS AUTH_USER;
+
+CREATE TABLE auth_role
 (
     name VARCHAR(255) NOT NULL,
-    CONSTRAINT pk_role PRIMARY KEY (name)
+    PRIMARY KEY (name)
 );
 
-CREATE TABLE `user`
+CREATE TABLE `auth_user`
 (
     user_id  BIGINT NOT NULL,
     username VARCHAR(255),
     password VARCHAR(255),
     enabled  BOOLEAN,
-    CONSTRAINT pk_user PRIMARY KEY (user_id)
+    CONSTRAINT pk_user PRIMARY KEY (user_id),
+    CONSTRAINT uc_user_username UNIQUE (username)
 );
 
-CREATE TABLE `user_roles`
+CREATE TABLE `auth_user_auth_roles`
 (
     auth_user_user_id BIGINT       NOT NULL,
     roles_name   VARCHAR(255) NOT NULL,
-    CONSTRAINT pk_user_roles PRIMARY KEY (user_user_id, roles_name)
+    CONSTRAINT pk_user_roles PRIMARY KEY (auth_user_user_id, roles_name),
+    CONSTRAINT fk_userol_on_role FOREIGN KEY (roles_name) REFERENCES auth_role (name),
+    CONSTRAINT fk_userol_on_user FOREIGN KEY (auth_user_user_id) REFERENCES `auth_user` (user_id)
 );
-
-ALTER TABLE `user`
-    ADD CONSTRAINT uc_user_username UNIQUE (username);
-
-ALTER TABLE `user_roles`
-    ADD CONSTRAINT fk_userol_on_role FOREIGN KEY (roles_name) REFERENCES `auth_role` (name);
-
-ALTER TABLE `user_roles`
-    ADD CONSTRAINT fk_userol_on_user FOREIGN KEY (user_user_id) REFERENCES  `auth_user` (user_id);

@@ -46,6 +46,20 @@ public class AuthDataSourceConfiguration {
     public PlatformTransactionManager authTransactionManager(
         @Qualifier("authEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
+    }
 
+    @Bean
+    public DataSourceInitializer dataSourceInitializer(@Qualifier("authDataSource") DataSource authDataSource) {
+        DataSourceInitializer initializer = new DataSourceInitializer();
+        initializer.setDataSource(authDataSource);
+        initializer.setDatabasePopulator(databasePopulator());
+        return initializer;
+    }
+
+    private DatabasePopulator databasePopulator() {
+        var populator = new ResourceDatabasePopulator();
+        populator.addScript(new ClassPathResource("auth-schema.sql"));
+        populator.addScript(new ClassPathResource("auth-data.sql"));
+        return populator;
     }
 }
