@@ -21,16 +21,20 @@ public class AuthProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        System.out.println("auth for: " + authentication);
+        if (authentication.isAuthenticated()) return authentication;
+        if (authentication.getPrincipal() != null) return authentication;
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
         UserService.UserAndRoles userAndRoles = userService.getUser(username)
             .filter($userAndRoles -> passwordEncoder.matches(password, $userAndRoles.user().getPassword()))
-            .orElseThrow(() -> new UsernameNotFoundException("username" + "/password"));
+            .orElseThrow(() -> new UsernameNotFoundException("username/password"));
         return new AuthenticationImpl(userAndRoles.user());
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
+        System.out.println("class check: " + authentication.getCanonicalName());
         return Authentication.class.isAssignableFrom(authentication);
     }
 }

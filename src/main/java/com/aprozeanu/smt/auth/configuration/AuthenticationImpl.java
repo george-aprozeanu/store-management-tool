@@ -1,24 +1,23 @@
 package com.aprozeanu.smt.auth.configuration;
 
-import com.aprozeanu.smt.auth.model.Role;
 import com.aprozeanu.smt.auth.model.User;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collection;
 import java.util.List;
 
 public class AuthenticationImpl implements Authentication {
     private final User user;
-    private final List<AuthRole> roles;
+    private final List<SimpleGrantedAuthority> roles;
 
     public AuthenticationImpl(User user) {
         this.user = user;
-        this.roles = user.getRoles().stream().map(AuthRole::new).toList();
+        this.roles = user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName())).toList();
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<SimpleGrantedAuthority> getAuthorities() {
         return this.roles;
     }
 
@@ -50,19 +49,5 @@ public class AuthenticationImpl implements Authentication {
     @Override
     public String getName() {
         return this.user.getUsername();
-    }
-
-    public static class AuthRole implements GrantedAuthority {
-
-        private final String authority;
-
-        public AuthRole(Role role) {
-            this.authority = role.getName();
-        }
-
-        @Override
-        public String getAuthority() {
-            return this.authority;
-        }
     }
 }
