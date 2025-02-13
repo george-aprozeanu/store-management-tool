@@ -12,11 +12,13 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityFilterConfiguration {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, AuthProvider authProvider) throws Exception {
         http.authorizeHttpRequests((authorize) -> authorize
+                .requestMatchers(HttpMethod.GET, "/auth/session-token").authenticated()
                 .requestMatchers(HttpMethod.POST, "/auth/session-token").authenticated()
                 .anyRequest().permitAll())
-            .httpBasic(withDefaults());
+            .httpBasic(withDefaults())
+            .authenticationProvider(authProvider);
         return http.build();
     }
 }

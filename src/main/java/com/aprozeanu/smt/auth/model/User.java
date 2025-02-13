@@ -7,7 +7,7 @@ import java.util.Set;
 @Entity
 @Table(name = "auth_user")
 public class User {
-    @ManyToMany()
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     public Set<Role> roles;
     @Id
     Long userId;
@@ -50,4 +50,7 @@ public class User {
         this.password = password;
     }
 
+    public Set<Role> getRoles() {
+        return this.roles;
+    }
 }
