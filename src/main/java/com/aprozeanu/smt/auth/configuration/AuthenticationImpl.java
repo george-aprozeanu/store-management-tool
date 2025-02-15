@@ -9,11 +9,11 @@ import java.util.Collection;
 import java.util.List;
 
 public class AuthenticationImpl implements Authentication {
-    private final User user;
+    private final Principal principal;
     private final List<AuthRole> roles;
 
     public AuthenticationImpl(User user) {
-        this.user = user;
+        this.principal = new Principal(user.getUserId(), user.getUsername());
         this.roles = user.getRoles().stream().map(AuthRole::new).toList();
     }
 
@@ -24,7 +24,7 @@ public class AuthenticationImpl implements Authentication {
 
     @Override
     public String getCredentials() {
-        return this.user.getPassword();
+        return null;
     }
 
     @Override
@@ -33,8 +33,8 @@ public class AuthenticationImpl implements Authentication {
     }
 
     @Override
-    public User getPrincipal() {
-        return this.user;
+    public Principal getPrincipal() {
+        return this.principal;
     }
 
     @Override
@@ -49,7 +49,10 @@ public class AuthenticationImpl implements Authentication {
 
     @Override
     public String getName() {
-        return this.user.getUsername();
+        return this.principal.name();
+    }
+
+    public record Principal(Long userId, String name) {
     }
 
     public static class AuthRole implements GrantedAuthority {
