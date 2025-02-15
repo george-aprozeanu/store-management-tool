@@ -1,5 +1,6 @@
 package com.aprozeanu.smt.service.browse;
 
+import com.aprozeanu.smt.model.store.Market;
 import com.aprozeanu.smt.model.store.StoreSectionEntry;
 import com.aprozeanu.smt.repository.*;
 import com.aprozeanu.smt.service.browse.dto.*;
@@ -7,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -45,7 +47,8 @@ public class BrowseStoreService {
     }
 
     public AllMarketsResponse getAllMarkets() {
-        return AllMarketsResponse.from(marketRepository.findAll());
+        List<Market> markets = marketRepository.findAll();
+        return AllMarketsResponse.from(markets);
     }
 
     public AllStoresResponse getAllStores() {

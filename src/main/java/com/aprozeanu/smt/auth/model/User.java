@@ -7,7 +7,7 @@ import java.util.Set;
 @Entity
 @Table(name = "auth_user")
 public class User {
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.EAGER)
     public Set<Role> roles;
     @Id
     Long userId;

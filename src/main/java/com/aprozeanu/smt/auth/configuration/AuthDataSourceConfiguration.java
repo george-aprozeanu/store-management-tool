@@ -49,7 +49,7 @@ public class AuthDataSourceConfiguration {
     }
 
     @Bean
-    public DataSourceInitializer dataSourceInitializer(@Qualifier("authDataSource") DataSource authDataSource) {
+    public DataSourceInitializer authDatasourceInitializer(@Qualifier("authDataSource") DataSource authDataSource) {
         DataSourceInitializer initializer = new DataSourceInitializer();
         initializer.setDataSource(authDataSource);
         initializer.setDatabasePopulator(databasePopulator());

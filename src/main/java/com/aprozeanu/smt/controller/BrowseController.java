@@ -5,6 +5,7 @@ import com.aprozeanu.smt.service.browse.dto.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import static com.aprozeanu.smt.http.Response.foundOptional;
 
 @RestController
 @RequestMapping("/browse")
+@PreAuthorize("hasRole('Consumer')")
 public class BrowseController {
 
     final BrowseStoreService service;
