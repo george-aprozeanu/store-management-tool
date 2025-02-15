@@ -56,7 +56,7 @@ public class ManageStoreService {
             storeSectionEntry.setPrice(request.price());
             em.merge(storeSectionEntry);
         }
-        return new UpdatePriceRequest.UpdatePriceResponse();
+        return new UpdatePriceRequest.UpdatePriceResponse(storeSectionEntry.getId(), request.price());
     }
 
     @SuppressWarnings("unchecked")
