@@ -20,7 +20,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AuthProviderTest {
+public class AuthProviderTest {
 
     @Mock
     private UserService userService;
@@ -44,7 +44,7 @@ class AuthProviderTest {
     }
 
     @Test
-    void authenticateWithValidCredentials() {
+    public void authenticateWithValidCredentials() {
         String username = "validUser";
         String password = "validPassword";
         User user = new User();
@@ -63,7 +63,7 @@ class AuthProviderTest {
     }
 
     @Test
-    void authenticateWithInvalidPassword() {
+    public void authenticateWithInvalidPassword() {
         String username = "validUser";
         String password = "invalidPassword";
         User user = new User();
@@ -78,7 +78,7 @@ class AuthProviderTest {
     }
 
     @Test
-    void authenticateWithNonExistentUser() {
+    public void authenticateWithNonExistentUser() {
         String username = "nonExistentUser";
         String password = "anyPassword";
 

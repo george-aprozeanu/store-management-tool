@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.mockito.Mockito.when;
 
-class ManageStoreServiceTest {
+public class ManageStoreServiceTest {
 
     @Mock
     private StoreSectionEntryRepository entryRepository;
@@ -39,7 +39,7 @@ class ManageStoreServiceTest {
     }
 
     @Test
-    void dispatchRequestWithValidUpdatePriceRequest() {
+    public void dispatchRequestWithValidUpdatePriceRequest() {
         UpdatePriceRequest request = new UpdatePriceRequest(1L, 1L, 100);
 
         StoreSectionEntry storeSectionEntry = new StoreSectionEntry();
@@ -54,7 +54,7 @@ class ManageStoreServiceTest {
     }
 
     @Test
-    void dispatchRequestWithInvalidUpdatePriceRequest() {
+    public void dispatchRequestWithInvalidUpdatePriceRequest() {
         UpdatePriceRequest request = new UpdatePriceRequest(1L, 1L, 100);
 
         when(entryRepository.findStoreSectionEntryByStoreSectionIdAndProductId(1L, 1L)).thenReturn(null);
@@ -66,7 +66,7 @@ class ManageStoreServiceTest {
     }
 
     @Test
-    void dispatchRequestWithUnsupportedRequest() {
+    public void dispatchRequestWithUnsupportedRequest() {
         ManageStoreRequest<String> unsupportedRequest = new ManageStoreRequest<>() {
         };
 
@@ -77,7 +77,7 @@ class ManageStoreServiceTest {
     }
 
     @Test
-    void sequenceIncrementsCorrectly() {
+    public void sequenceIncrementsCorrectly() {
         long firstSequence = manageStoreService.sequence();
         long secondSequence = manageStoreService.sequence();
 
