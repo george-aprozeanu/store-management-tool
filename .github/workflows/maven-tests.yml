@@ -32,3 +32,12 @@ jobs:
 
       - name: Install dependencies and run tests
         run: mvn test
+
+      - name: Generate test report
+        run: mvn surefire-report:report
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: target/site/surefire-report.html
