@@ -30,14 +30,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Install dependencies and run tests
-        run: mvn test
-
-      - name: Generate test report
+      - name: Run Tests
         run: mvn surefire-report:report
 
       - name: Upload test report
         uses: actions/upload-artifact@v4
         with:
           name: test-report
-          path: target/site/surefire-report.html
+          path: target/reports/
