@@ -14,3 +14,13 @@ Authorization: Basic dXNlcjpwYXNzd29yZA==
 ###
 GET http://localhost:8080/api/v1/manage/set-price
 Authorization: Basic dXNlcjpwYXNzd29yZA==
+
+
+###
+GET http://localhost:8080/api/v1/browse/markets
+#Authorization: Basic dXNlcjpwYXNzd29yZA==
+Accept: application/json
+
+###
+GET http://localhost:8080/api/v1/browse/markets
+Accept: application/json

@@ -9,6 +9,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -27,7 +28,8 @@ public class AuthConfiguration {
             .csrf(AbstractHttpConfigurer::disable)
             .httpBasic(withDefaults())
             .authenticationProvider(authProvider)
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+            .securityContext(securityContext -> securityContext.securityContextRepository(new HttpSessionSecurityContextRepository()));
         return http.build();
     }
 }
