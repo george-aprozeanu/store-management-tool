@@ -2,6 +2,7 @@ package com.aprozeanu.smt.controller;
 
 import com.aprozeanu.smt.service.find.FindProductService;
 import com.aprozeanu.smt.service.find.dto.SearchProductsResponse;
+import jakarta.validation.constraints.Min;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,8 +19,8 @@ public class FindProductController {
     }
 
     @GetMapping("/products")
-    public SearchProductsResponse getProductsByName(@RequestParam("search") String search,
-                                                    @RequestParam(value = "limit", defaultValue = "20") int limit) {
+    public SearchProductsResponse getProductsByName(@RequestParam("search") String search, @RequestParam(value =
+        "limit", defaultValue = "20") @Min(1) int limit) {
         return service.searchProducts(search, limit);
     }
 }

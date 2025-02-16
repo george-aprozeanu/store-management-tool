@@ -28,10 +28,11 @@ public class ManageStoreController {
     }
 
     private ResponseEntity<?> processRequest(ManageStoreRequest<?> request) {
-        var result = service.dispatchRequest(request);
-        if (result instanceof ManageStoreService.Success<?> success) {
+        var response = service.dispatchRequest(request);
+        // Writing ifs like this while waiting for switch expressions.
+        if (response.result() instanceof ManageStoreService.Success<?> success) {
             return ResponseEntity.ok(success);
-        } else if (result instanceof ManageStoreService.Failure<?> failure) {
+        } else if (response.result() instanceof ManageStoreService.Failure<?> failure) {
             return ResponseEntity.internalServerError().body(failure);
         } else {
             throw new RuntimeException("never");
