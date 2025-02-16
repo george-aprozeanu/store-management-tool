@@ -33,6 +33,14 @@ jobs:
       - name: Run Tests
         run: mvn surefire-report:report
 
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()    # run this step even if previous step failed
+        with:
+          name: JEST Tests            # Name of the check run which will be created
+          path: target/surefire-reports/TEST-*.xml    # Path to test results
+          reporter: java-junit
+
       - name: Upload test report
         uses: actions/upload-artifact@v4
         with:
