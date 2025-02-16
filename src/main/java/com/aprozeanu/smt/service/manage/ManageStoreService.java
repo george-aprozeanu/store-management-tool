@@ -31,7 +31,7 @@ public class ManageStoreService {
     }
 
     @Transactional
-    synchronized public <T> Response<T> dispatchRequest(ManageStoreRequest<T> request) {
+    public <T> Response<T> dispatchRequest(ManageStoreRequest<T> request) {
         var sequence = sequence();
         logger.info(String.format("Request submitted SEQ #%06d %s", sequence, request));
         try {

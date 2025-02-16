@@ -1,5 +1,6 @@
-package com.aprozeanu.smt.model;
+package com.aprozeanu.smt;
 
+import com.aprozeanu.smt.model.StringToListConverter;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

@@ -1,5 +1,6 @@
-package com.aprozeanu.smt.auth.configuration;
+package com.aprozeanu.smt;
 
+import com.aprozeanu.smt.auth.configuration.AuthProvider;
 import com.aprozeanu.smt.auth.model.Role;
 import com.aprozeanu.smt.auth.model.User;
 import com.aprozeanu.smt.auth.service.UserService;

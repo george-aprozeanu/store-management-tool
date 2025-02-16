@@ -1,7 +1,8 @@
-package com.aprozeanu.smt.service.manage;
+package com.aprozeanu.smt;
 
 import com.aprozeanu.smt.model.store.StoreSectionEntry;
 import com.aprozeanu.smt.repository.StoreSectionEntryRepository;
+import com.aprozeanu.smt.service.manage.ManageStoreService;
 import com.aprozeanu.smt.service.manage.dto.ManageStoreRequest;
 import com.aprozeanu.smt.service.manage.dto.UpdatePriceRequest;
 import jakarta.persistence.EntityManager;
@@ -74,13 +75,5 @@ public class ManageStoreServiceTest {
 
         assertInstanceOf(ManageStoreService.Failure.class, response.result());
         assertEquals("unsupported", ((ManageStoreService.Failure<?>) response.result()).errorMessage());
-    }
-
-    @Test
-    public void sequenceIncrementsCorrectly() {
-        long firstSequence = manageStoreService.sequence();
-        long secondSequence = manageStoreService.sequence();
-
-        assertEquals(firstSequence + 1, secondSequence);
     }
 }

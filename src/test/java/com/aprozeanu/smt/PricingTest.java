@@ -1,5 +1,8 @@
-package com.aprozeanu.smt.model.price;
+package com.aprozeanu.smt;
 
+import com.aprozeanu.smt.model.price.Currency;
+import com.aprozeanu.smt.model.price.Pricing;
+import com.aprozeanu.smt.model.price.TaxCategory;
 import com.aprozeanu.smt.model.store.Market;
 import com.aprozeanu.smt.model.store.Store;
 import com.aprozeanu.smt.model.store.StoreSection;
