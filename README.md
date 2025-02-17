@@ -1,4 +1,6 @@
 # Store Management Tool
+[![Test Status](https://camo.githubusercontent.com/bac26ae7229ae7c264b455bb9c98b24db13102f890e6ab8ca918d130d75e0484/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f74657374732d31322532307061737365642d73756363657373
+)](https://github.com/george-aprozeanu/store-management-tool/actions)
 
 Spring Boot-based Java application demonstrating RESTful API development with custom repositories and Hibernate Search.
 
